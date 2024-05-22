@@ -41,7 +41,7 @@ class Picture:
         al lado derecho de la figura actual """
     join = []
     for i in range(len(self.img)):
-      join.append([*self.img[i], *p.img[i]])
+      join.append(self.img[i] + p.img[i])
     return Picture(join)
 
   def up(self, p):
