@@ -32,7 +32,7 @@ class Picture:
     """ Devuelve un negativo de la imagen """
     inverter = []
     for value in self.img:
-      inverter.append([self._invColor(caracter) for caracter in value])
+      inverter.append(self._invColor(caracter) for caracter in value)
     return Picture(inverter)
 
   # Usamos el operador de destructuracion para concatenar los strings
@@ -52,13 +52,14 @@ class Picture:
         figura actual """
     return Picture(None)
   
+  # Usando el operador '*' para generar el elemento cuantas veces queramos
   def horizontalRepeat(self, n):
     """ Devuelve una nueva figura repitiendo la figura actual al costado
         la cantidad de veces que indique el valor de n """
     horizontal = []
     for value in self.img:
-      horizontal.append([value * n])
-      print(value * n)
+      horizontal.append(value * n)
+      # print(value * n)
     return Picture(horizontal)
 
   def verticalRepeat(self, n):
