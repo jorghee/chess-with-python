@@ -44,8 +44,10 @@ class Picture:
       join.append(self.img[i] + p.img[i])
     return Picture(join)
 
+  # Usamos los operadores de destructuración  propios de la sintaxis de python
   def up(self, p):
-    return Picture(None)
+    up = [*self.img, *p.img]
+    return Picture(up)
 
   # Las dos imagenes deben ser del mismo tamaño, si la imagen como argumento es más grande
   # se recorta a la imagen actual y de lo contrario, ocurre un error.
