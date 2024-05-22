@@ -35,7 +35,7 @@ class Picture:
       inverter.append(self._invColor(caracter) for caracter in value)
     return Picture(inverter)
 
-  # Usamos el operador de destructuracion para concatenar los strings
+  # Usamos el operador '+' para concatenar los strings
   def join(self, p):
     """ Devuelve una nueva figura poniendo la figura del argumento 
         al lado derecho de la figura actual """
@@ -47,12 +47,27 @@ class Picture:
   def up(self, p):
     return Picture(None)
 
+  # Las dos imagenes deben ser del mismo tamaño, si la imagen como argumento es más grande
+  # se recorta a la imagen actual y de lo contrario, ocurre un error.
   def under(self, p):
     """ Devuelve una nueva figura poniendo la figura p sobre la
         figura actual """
-    return Picture(None)
+    under = []
+    for i in range(len(self.img)):
+      under.append(self.newString(self.img[i], p.img[i]))
+    return Picture(under)
   
-  # Usando el operador '*' para generar el elemento cuantas veces queramos
+  # Funcion que itera por cada caracter
+  def newString(self, s, p):
+    string = ""
+    for i in range(len(s)):
+      if p[i] == " ":
+        string += s[i]
+      else:
+        string += p[i]
+    return string
+
+  # Usando el operador multiplicador '*' para generar el elemento cuantas veces queramos
   def horizontalRepeat(self, n):
     """ Devuelve una nueva figura repitiendo la figura actual al costado
         la cantidad de veces que indique el valor de n """
@@ -62,13 +77,14 @@ class Picture:
       # print(value * n)
     return Picture(horizontal)
 
+  # Usando destructuración de listas
   def verticalRepeat(self, n):
     vertical = []
     for value in range(n):
       vertical = [*vertical, *self.img]
     return Picture(vertical)
 
-  #Extra: Sólo para realmente viciosos 
+  # Extra: Sólo para realmente viciosos
   def rotate(self):
     """Devuelve una figura rotada en 90 grados, puede ser en sentido horario
     o antihorario"""
