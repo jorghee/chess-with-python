@@ -27,8 +27,7 @@ class Picture:
       horizontal.append(self.img[size - 1 - value])
     return Picture(horizontal)
 
-  # Usamos el método _invColor() para cambiar de caracter y en consecuencia 
-  # cambiar la representación de dicho caracter
+  # Usamos el método _invColor() para cambiar el caracter
   def negative(self):
     """ Devuelve un negativo de la imagen """
     inverter = []
@@ -36,6 +35,7 @@ class Picture:
       inverter.append([self._invColor(caracter) for caracter in value])
     return Picture(inverter)
 
+  # Usamos el operador de destructuracion para concatenar los strings
   def join(self, p):
     """ Devuelve una nueva figura poniendo la figura del argumento 
         al lado derecho de la figura actual """
@@ -55,7 +55,17 @@ class Picture:
   def horizontalRepeat(self, n):
     """ Devuelve una nueva figura repitiendo la figura actual al costado
         la cantidad de veces que indique el valor de n """
-    return Picture(None)
+    print(len(self.img))
+    horizontal = []
+    for value in self.img:
+      horizontal.append([value * n])
+
+    for value in horizontal:
+      print(value, "\n")
+
+    print(len(horizontal))
+
+    return Picture(horizontal)
 
   def verticalRepeat(self, n):
     return Picture(None)
