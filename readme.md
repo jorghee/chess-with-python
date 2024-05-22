@@ -1,6 +1,6 @@
-# <samp>Tablero de ajedrez con Python :smile:</samp>
+# <samp>Tablero de ajedrez con Python :full_moon_with_face:</samp>
 
-## <samp>Intalar Python :snake:</samp>
+## <samp>Instalar Python :snake:</samp>
 Para poder usar las siguientes implementaciones que nos permite manipular la creación de tableros de ajedrez, debemos instalar Python en nuestro sistema operativo.
 
 > Intalando python en ubuntu :penguin:
@@ -9,7 +9,7 @@ sudo apt update
 sudo apt install python3
 ```
 
-## <samp>Intalar Pygame, una biblioteca de Python</samp>
+## <samp>Instalar Pygame, una biblioteca de Python</samp>
 La biblioteca `pygame` nos proporciona funcionalidades más accesibles tales como representar graficos 2D, sonido, manejo de eventos y entrada de usuario.
 
 Nosotros podemos realizar la instalación de paquetes de las siguiente dos formas.
@@ -65,17 +65,18 @@ Ahora estamos dentro del ambiente virtual. En este entorno nosotros podemos inst
 ```sh
 pip install pygame
 ```
-> Puedes listar los paquetes instalados
+> Puedes listar los paquetes instalados en el entorno virtual
 ```sh
 pip list
 
-# Puedes ver todas las opciones con
+# Si deseas ver todas las opciones
 pip --help
 
 ```
-Cuando termines de trabajar en tu proyecto, puedes salir del entorno virtual
+Cuando termines de trabajar en tu proyecto, necesitas salir del entorno virtual creado
+
 > Abandonar el entorno virtual
 ```sh
 deactivate
 ```
-Cuando sales del entorno virtual y por ejemplo ejecutas el comando `pip list` nuevamente, te darás cuenta que los paquetes disponibles difieren.
+Cuando sales del entorno virtual y por ejemplo ejecutas el comando nuevamente `pip list`, te darás cuenta que los paquetes disponibles difieren.
