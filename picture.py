@@ -16,7 +16,7 @@ class Picture:
     vertical = []
     for value in self.img:
     	vertical.append(value[::-1])
-    return vertical
+    return Picture(vertical)
 
   # Iterando desde el último elemento de la listas hacia el primer elmemento
   def horizontalMirror(self):
