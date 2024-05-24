@@ -30,9 +30,10 @@ class Picture:
   # Usamos el método _invColor() para cambiar el caracter
   def negative(self):
     """ Devuelve un negativo de la imagen """
+    empty = ""
     inverter = []
     for value in self.img:
-      inverter.append(self._invColor(caracter) for caracter in value)
+      inverter.append(empty.join([self._invColor(caracter) for caracter in value]))
     return Picture(inverter)
 
   # Usamos el operador '+' para concatenar los strings
