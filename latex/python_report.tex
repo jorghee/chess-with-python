@@ -13,7 +13,7 @@
 
 % Syntax customization with minted package
 \usepackage{minted}
-\usemintedstyle{nord}
+\usemintedstyle{nord-darker}
 \setminted{
   breaklines,
   linenos,
@@ -97,15 +97,210 @@ def horizontalMirror(self):
   return Picture(horizontal)
 \end{minted}
 
-\subsection{}
-\subsection{}
-\subsection{}
-\subsection{}
-\subsection{}
-\subsection{}
-\subsection{}
-\subsection{}
-\subsection{}
+\subsection{El método \mintpython{negative()}}
+Este método se encarga de cambiar algunos caracteres que se muestran en el script \href{https://github.com/jorghee/chess-with-python/blob/main/colors.py}{colors.py} justamente en el diccionario \mintpython{inverter}.
+\singlespacing
+Para implementar esta funcionalidad rápidamente pensamoe en que debemos iterar por cada string de la lista \mintpython{self.img} y luego iterar por cada caracter y aplicar el método \mintpython{\_invColor()} que se muestra acontinuación:
+
+\begin{minted}[bgcolor=background]{python}
+def _invColor(self, color):
+  if color not in inverter:
+    return color
+  return inverter[color]
+\end{minted}
+
+Este método mostrado recibe el caracter como argumento y lo pasa como clave al diccionario mintpython{inverter} el cual devuelve como valor el caracter de cambio.
+\singlespacing
+Con esta información procedemos a codear las siguientes instrucciones.
+
+\begin{itemize}
+  \item Creamos una variable \mintpython{empty} que contiene un string vacío y creamos una lista \mintpython{inverter} vacía que regresará la lista nueva.
+  \item Utilizamos un \mintpython{for in} para iterar sobre la imagen y luego en cada string aplicamos el concepto de \textbf{Comprensión de listas} que es sintaxis propia de python. Esta sintaxis nos permite crear una nueva lista de acuerdo a un elemento iterable, en este caso va a ser el string actualmente iterado por el \mintpython{for in} externo.
+  \item Aqui llamamos al método \mintpython{\_invColor()} que va a recibir los caracteres del string en iteración y aplicará el cambio si es necesario.
+  \item Por último, lo que se ha generado es una lista, pero nosotros deseamos un string. Por lo tanto aplicamos el método \mintpython{join()} para concatenar todos los caracteres de esta nueva lista generada y ya como string usamos la función \mintpython{append()} para agregar a la nueva lista que se retornará.
+\end{itemize}
+
+\begin{minted}[bgcolor=background]{python}
+# Usamos el método _invColor() para cambiar el caracter
+def negative(self):
+  """ Devuelve un negativo de la imagen """
+  empty = ""
+  inverter = []
+  for value in self.img:
+    inverter.append(empty.join([self._invColor(caracter) for caracter in value]))
+  return Picture(inverter)
+\end{minted}
+
+\subsection{El método \mintpython{join()}}
+Este método debe agregar a la derecha la imagen que recibe como argumento, como nos imaginamos este métod es sencillo de implementar porque simplemente necesitamos concatenar a la derecha de la imagen actual.
+
+\begin{itemize}
+  \item Creamos la lista \mintpython{join} vacía que representará la nueva imagen formada.
+  \item Iniciamos la intruccion de control \mintpython{for in} para iterar en un rango igual a la longitud de \mintpython{self.img}
+  \item Luego con la variable \textbf{i} que recibe los numeros del rango generado, accedemos al string de la imagen actual y la imagen como argumento finalizando con la concatenación de estos.
+\end{itemize}
+
+\begin{minted}[bgcolor=background]{python}
+# Usamos el operador '+' para concatenar los strings
+def join(self, p):
+  """ Devuelve una nueva figura poniendo la figura del argumento 
+      al lado derecho de la figura actual """
+  join = []
+  for i in range(len(self.img)):
+    join.append(self.img[i] + p.img[i])
+  return Picture(join)
+\end{minted}
+
+\subsection{El método \mintpython{up()}}
+El método debe poner a \mintpython{self.img} por encima de la imagen que recibe como argumento. Este se torna sencillo cuando usamos el \textbf{Operador de destructuración} propio de la sintaxis de python. 
+\singlespacing
+Lo que el operador de destructuración es literalmente destructurar por ejemplo una lista y pasar los elementos de esta como elementos sueltos, no como una lista como es común. Entonces esta sntaxis nos ahorra la necesidad de estar iterando por cada string y recien concatenar.
+
+\begin{minted}[bgcolor=background]{python}
+# Usamos los operadores de destructuración  propios de la sintaxis de python
+def up(self, p):
+  up = [*self.img, *p.img]
+  return Picture(up)
+\end{minted}
+
+\subsection{El método \mintpython{under()}}
+Consiste en sobreponer la imagen que se recibe como argumentos sobre la imagen actual. Para esta lógica hemos decidido que el caracter vacio sea el punto de cambio. Es decir, que si algún caracater que conforma cada string de la lista que representa a la figura como argumeto es vacío, se toma en cuenta el caracter de la figura actual descartando el caracter de la figura como argumento.
+
+\paragraph{Dificultad}: La dificultad fue que el método funcione para sobreponer figuras de diferentes tamaños: cantidad de strings en cada lista y cantidad de caracateres en cada string.
+
+Para solucionar este reto, se tenía la obligación de establecer el tamaño más grande tanto en la catidad de string como en la cantidad de caracateres. Y de acuerdo a estos limites realizamos las iteraciones y verificaciones para que al final se rellenen con los string y/o caracateres restantes de la figura más grande.
+
+\begin{itemize}
+  \item Primero tenemos que encontrar a la figura con mayor tamaño, es decir con mayor número de strings. Además debemos encontrar el número de caracateres de la figura que contiene strings con mayores caracateres
+  \item Luego, declaramos una lista vacía denominada \mintpython{under} que representa la lista nueva que se va a generar.
+  \item Empezamos iterando en un rango de la figura más grande. Aqui debemos verificar solo una cosa sencilla, que la variable de control no sobrepase el tamaño de la figura pequeña. En caso sobrepase, lo que queda son los string de la figura más grande, por lo tanto solo agregamos estos strings a la lista \mintpython{under}.
+  \item Hasta el momento ya hemos solucionado el problema de figuras con cantidad de strings diferentes, ahora necesitamos solucionar las figuras con cantidad de caracateres de cada strings diferentes. Para ello hemo creado el método \mintpython{newString()} que recibe como argumentos al string de la figura actual, el string de la figura como argumento y el número que indica el número de caracateres de la figura con strings más grandes.
+\end{itemize}
+
+\begin{minted}[bgcolor=background]{python}
+# Implementación que funciona para cualquier longitud de las figuras
+def under(self, p):
+  """ Devuelve una nueva figura poniendo la figura p sobre la
+      figura actual """
+
+  # Verificamos qué figura tienes más cadenas de texto
+  lower = self.img
+  high = p.img
+  highC = len(p.img[0]) 
+
+  if len(lower) > len(high):
+    lower = p.img
+    high = self.img
+
+  if len(self.img[0]) > highC:
+    highC = len(self.img[0])
+
+  # Iteramos sobre las cadenas
+  under = []
+  for i in range(len(high)):
+    if i < len(lower):
+      under.append(self.newString(self.img[i], p.img[i], highC))
+    else:
+      under.append(high[i])
+  return Picture(under)
+\end{minted}
+
+\subsubsection{El método \mintpython{newString()} usado por \mintpython{under()}}
+Usamos la misma lógica de rellenar con los strings restantes de la figura más grande, solo que ahora son los caracteres del string más grande.
+
+\begin{itemize}
+  \item Creamos una variable \mintpython{string} que será la que se concatenará con los diferentes caracateres y se retornará en este método.
+  \item Iniciamos el bucle en un rango de \mintpython{h}, argumento que representa el tamaño del string de la figura más grande. Luego necesitamos realizar varias verificaciones comenzando con saber cúal es la figura que es más grande, parece absurdo hacer esto ahora pero es necesario ya que no se podia pasar directamente con a la figura con mayor número de caracateres porque de esta manera se perdia el conocimiento de qué figura es la que debe superponer a la otra. Por ejemplo nosotros sabemos que \mintpython{p} deber superponer a \mintpython{s} y eso no lo podemos perder.
+  \item Ahora empezamos con las verificaciones de acuerdo al caracter vacío. Como sabemos que \mintpython{p} es el string que debe superponer a \mintpython{s} y sabiendo que \mintpython{p} es el string con mayor tamaño, debemos verificar que la variable de control \mintpython{i} no sea mayor al tamaño de string \mintpython{s} y tambien verificar que \mintpython{p[i]} sea igual al caracter vacio. De cumplirse estas 2 condiciones entonces se concatena dicho caracter en iteración, de lo contrario se contrario se contatenará el caracter \mintpython{p[i]}.
+
+  \item Si es el caso de que \mintpython{p} no es el string de mayor tamaño entonces se asume que \mintpython{s} lo es, por lo tanto debemos verificar que \mintpython{i} sea menor que el tamaño que \mintpython{p} que ahora es el string pequeño y tambien verificar que \mintpython{p[i]} sea diferente del caracter vacío, ya que de lo contrario se concatena con \mintpython[s[i]].
+\end{itemize}
+
+\begin{minted}[bgcolor=background]{python}
+# Funcion que itera por cada caracter
+def newString(self, s, p, h):
+  string = ""
+  for i in range(h):
+    if len(p) == h:
+      if i < len(s) and p[i] == " ":
+        string += s[i]
+      else:
+        string += p[i]
+    elif i < len(p) and p[i] != " ":
+      string += p[i]
+    else:
+      string += s[i]
+  return string
+\end{minted}
+
+\subsection{El método \mintpython{horizontalRepeat()}}
+En este método vamos a utilizar el concepto de \textbf{Operador de multiplicación} que se puede aplicar a listas y strings en python. Básicamente el método debe tener la funcionalidad de repetir horizontalmente n veces a la figura actual.
+
+\begin{itemize}
+  \item Creamos una lista \mintpython{horizontal} en la cual se le ira agregando cada string multiplicado.
+  \item Empezamos iterando en la figura actual, esta lógica es sencilla porque simplemente usamos la función \mintpython{append} a la cual pasamos como argumento el string actualmente iterado multiplicado n veces, lo que hace que dicho string se repita n veces.
+\end{itemize}
+
+\begin{minted}[bgcolor=background]{python}
+# Usando el operador multiplicador '*' para generar el elemento cuantas veces queramos
+def horizontalRepeat(self, n):
+  """ Devuelve una nueva figura repitiendo la figura actual al costado
+      la cantidad de veces que indique el valor de n """
+  horizontal = []
+  for value in self.img:
+    horizontal.append(value * n)
+    # print(value * n)
+  return Picture(horizontal)
+\end{minted}
+
+\subsection{El método \mintpython{verticalRepeat()}}
+Este método repite también n veces la figura actual pero ahora lo hacemos verticamente. En este caso necesitamos multiplicar el número de string en la lista, ya no los caracteres. El concepto de \textbf{Operador de destructuración} nuevamente nos simplifica enormemente esta funcionalidad.
+
+\begin{itemize}
+  \item Creamos una lista \mintpython{vertical}, luego iteramos en un rango de \mintpython{n} que es el argumento que el usuario ingresa. 
+  \item En la iteración nosotros modificamos la \mintpython{vertical} que recibe los elementos destructurados de las listas \mintpython{vertical} y \mintpython{self.img}. Aclarar que en la primera iteración \mintpython{vertical} es una lista vacía y poco a poco se va modificando sumandos sus propios string con los strings de \mintpython{self.img}.
+\end{itemize}
+
+\begin{minted}[bgcolor=background]{python}
+# Usando destructuración de listas
+def verticalRepeat(self, n):
+  vertical = []
+  for value in range(n):
+    vertical = [*vertical, *self.img]
+  return Picture(vertical)
+\end{minted}
+
+\subsection{El método \mintpython{rotate()}}
+Si no fuera por el método \mintpython{under()}, este método a implementar hubiera sido el más dificil porque nos pide devolver la figura actual rotada 90 grados. Es necesario mencionar que esta implementación solo funciona para figuras con tamaños y con tamaños de strings iguales.
+\singlespacing
+Para iniciar esta lógica se ha decidido que la rotación va a ser antihoraria. Entonces, la idea básica es que el el primer caracter del primer string de la figura se convierta en el primer caracter del último string de la figura, luego que el segundo caracter del primer string de la figura se convierta en el primer caracter del penúltimo string, y asi sucesivamente.
+
+\begin{itemize}
+  \item Comenzamos creando una lista \mintpython{rotate} de un tamaño de \mintpython{len(self.img)} que contienen strings vacios. Estos strings vacíos poco a poco se iran concatenando con los caracteres respectivos según la lógica ya explicada.
+  \item Ahora necesitamos iterar por los caracteres de cada string, por lo tanto usamos un \mintpython{for in} anidado. Entonces cada caracter que iteramos lo ponemos al final de \mintpython{rotate} pero avanzando hacia el primer string de la lista. Aqui nos ayuda la variable de control \mintpython{i} que aumenta según el \mintpython{for in} interno y se reinicia cuando termina dicho bucle. 
+\end{itemize}
+
+\begin{minted}[bgcolor=background]{python}
+# Extra: Sólo para realmente viciosos
+def rotate(self):
+  """Devuelve una figura rotada en 90 grados, puede ser en sentido horario
+  o antihorario"""
+  rotate = []
+
+  # Creamos la lista vacia pero con n elementos
+  for i in range(len(self.img)):
+    rotate.append("")
+
+  i = 0
+  for value in self.img:
+    for caracter in value:
+      rotate[len(self.img) - 1 - i] += caracter
+      i += 1
+    i = 0
+
+  return Picture(rotate)
+\end{minted}
+
 \section{Resolución de los ejercicios}
 \subsection{}
 \subsection{}
