@@ -58,43 +58,37 @@ class Picture:
     # Verificamos qué figura tienes más cadenas de texto
     lower = self.img
     high = p.img
+    highC = len(p.img[0]) 
 
     if len(lower) > len(high):
       lower = p.img
       high = self.img
 
+    if len(self.img[0]) > highC:
+      highC = len(self.img[0])
+
     # Iteramos sobre las cadenas
     under = []
     for i in range(len(high)):
       if i < len(lower):
-        under.append(self.newString(self.img[i], p.img[i]))
+        under.append(self.newString(self.img[i], p.img[i], highC))
       else:
         under.append(high[i])
     return Picture(under)
   
   # Funcion que itera por cada caracter
-  def newString(self, s, p):
-    # Verificaciones innecesarias, pero es imposible saber cual figura está por
-    # encima y a la vez es de mayor tamaño
-    lower = s
-    high = p
-    if len(s) > len(p):
-      lower = p
-      high = s
-
-    # Realizamos las concatenaciones
+  def newString(self, s, p, h):
     string = ""
-    for i in range(len(high)):
-      if len(p) == len(high):
+    for i in range(h):
+      if len(p) == h:
         if i < len(s) and p[i] == " ":
           string += s[i]
         else:
           string += p[i]
+      elif i < len(p) and p[i] != " ":
+        string += p[i]
       else:
-        if i < len(p) and p[i] != " ":
-          string += p[i]
-        else:
-          string += s[i]
+        string += s[i]
     return string
 
   # Usando el operador multiplicador '*' para generar el elemento cuantas veces queramos
