@@ -18,9 +18,9 @@
   breaklines,
   linenos,
   frame=lines,
-  fontsize=\footnotesize
+  fontsize=\normalsize
 }
-\newcommand{\mintpython}[1]{\mintinline[style=grubvox-light]{python}{#1}}
+\newcommand{\mintpython}[1]{\mintinline[style=gruvbox-light]{python}{#1}}
 
 % Define background color
 \definecolor{background}{HTML}{2E3440}
@@ -64,9 +64,9 @@
 	\student \vfill
   {\textbf{Email:} \par}
   \href{\email}{jmamanihuars@unsa.edu.pe} \vfill
-	{\large \mydate \par}
   {\textbf{Repositorio GitHub:} \par}
   \href{\github}{\github} \vfill
+	{\large \mydate \par}
 \end{titlepage}
 
 \section{Implementando los métodos de la clase Picture}
@@ -83,11 +83,11 @@ Este método devuelve el espejo horizontal de la imagen, es decir, el giro se ha
 La lógica en mente es iterar sobre la lista de string del objeto Picture al cual se le esta aplicanco este método y pasar el últimstring de la lista al primer elemento de una nueva lista que denominaremos \mintpython{horizontal}
 
 \begin{itemize}
-  \item Primero creamos la lista \minpython{horizontal} vacía con el objetivo de que según la iteración se vayan agregando las los strings de \mintpython{self.img}
+  \item Primero creamos la lista \mintpython{horizontal} vacía con el objetivo de que según la iteración se vayan agregando las los strings de \mintpython{self.img}
   \item Ahora declaramos la estructura de control \mintpython{for in} para iterar sobre \mintpython{self.img}. Empezamos interando desde el último elemento de esta lista y dicho valor lo asignamos al primer elemento de la lista creada inicialmente vacía.
 \end{itemize}
 
-\begin[bgcolor=background]{minted}
+\begin{minted}[bgcolor=background]{python}
 # Iterando desde el último elemento de la listas hacia el primer elmemento
 def horizontalMirror(self):
   size = len(self.img)
