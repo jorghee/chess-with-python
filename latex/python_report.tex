@@ -1,0 +1,118 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english, spanish]{babel}
+\usepackage[left=25mm, right=25mm, top=35mm, bottom=30mm, headheight=35mm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{indentfirst}
+
+% Syntax customization with minted package
+\usepackage{minted}
+\usemintedstyle{nord}
+\setminted{
+  breaklines,
+  linenos,
+  frame=lines,
+  fontsize=\footnotesize
+}
+\newcommand{\mintpython}[1]{\mintinline[style=grubvox-light]{python}{#1}}
+
+% Define background color
+\definecolor{background}{HTML}{2E3440}
+
+% Variables
+\newcommand{\university}{Universidad Nacional de San Agustín de Arequipa}
+\newcommand{\faculty}{Facultad de Ingeniería de Producción y Servicios}
+\newcommand{\program}{Escuela Profesional de Ingeniería de Sistemas}
+\newcommand{\semester}{2024 - A}
+\newcommand{\course}{img/web_programming.png}
+\newcommand{\topic}{img/python.png}
+\newcommand{\professor}{Carlo Jose Luis Corrales Delgado}
+\newcommand{\student}{Jorge Luis Mamani Huarsaya}
+\newcommand{\email}{https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=jmamanihuars@unsa.edu.pe}
+\newcommand{\github}{https://github.com/jorghee/chess-with-python}
+\newcommand{\mydate}{24 de mayo, 2024}
+
+% Just parts and chapters numbered
+\setcounter{secnumdepth}{0}
+
+% Head and foot customization
+\pagestyle{fancy}
+\lhead{\raisebox{-0.2\height}{\includegraphics[width=4cm]{img/logo_unsa.png}}}
+\chead{\fontsize{8}{8}\selectfont \university \\ \faculty \\ \textbf{\program}}
+\rhead{\raisebox{-0.2\height}{\includegraphics[width=3.5cm]{img/logo_episunsa.png}}}
+\lfoot{Estudiante \student}
+\cfoot{}
+\rfoot{Pág. \thepage}
+
+\begin{document}
+
+\begin{titlepage}
+	\centering
+	\includegraphics[width=15cm]{\course} \par
+  \vfill \vfill
+	\includegraphics[width=15cm]{\topic}\par
+  \vfill \vfill
+  {\textbf{Profesor(a):} \par}
+	\professor \vfill
+  {\textbf{Estudiante:} \par}
+	\student \vfill
+  {\textbf{Email:} \par}
+  \href{\email}{jmamanihuars@unsa.edu.pe} \vfill
+	{\large \mydate \par}
+  {\textbf{Repositorio GitHub:} \par}
+  \href{\github}{\github} \vfill
+\end{titlepage}
+
+\section{Implementando los métodos de la clase Picture}
+Para entender toda la lógica que se explicará a continuación debemos tener claro los siguiente conceptos:
+
+\begin{itemize}
+  \item La clase Picture tiene un campo denominado \textbf{img}, el cual es una lista de cadenas de texto (strings). Lo curioso es que esta lista de strings representa la figura que usando el paquete \textbf{pygame} y la lógica del archivo \href{https://github.com/jorghee/chess-with-python/blob/main/interpreter.py}{interpreter.py} se transforma de caracteres a pixeles.
+  \item Nosotros no debemos preocuparnos por la conversión de caracteres a pixeles, nuestra aventura es implementar la manipulación de los strings, por lo tanto vamos a trabajar con la lista de strings \mintpython{self.img}
+\end{itemize}
+
+\subsection{El método \mintpython{horizontalMirror()}}
+Este método devuelve el espejo horizontal de la imagen, es decir, el giro se hace alrededor de una linea imaginaria horizontal trazada en medio de la imagen. 
+\singlespacing
+La lógica en mente es iterar sobre la lista de string del objeto Picture al cual se le esta aplicanco este método y pasar el últimstring de la lista al primer elemento de una nueva lista que denominaremos \mintpython{horizontal}
+
+\begin{itemize}
+  \item Primero creamos la lista \minpython{horizontal} vacía con el objetivo de que según la iteración se vayan agregando las los strings de \mintpython{self.img}
+  \item Ahora declaramos la estructura de control \mintpython{for in} para iterar sobre \mintpython{self.img}. Empezamos interando desde el último elemento de esta lista y dicho valor lo asignamos al primer elemento de la lista creada inicialmente vacía.
+\end{itemize}
+
+\begin[bgcolor=background]{minted}
+# Iterando desde el último elemento de la listas hacia el primer elmemento
+def horizontalMirror(self):
+  size = len(self.img)
+  horizontal = []
+  for value in range(size):
+    horizontal.append(self.img[size - 1 - value])
+  return Picture(horizontal)
+\end{minted}
+
+\subsection{}
+\subsection{}
+\subsection{}
+\subsection{}
+\subsection{}
+\subsection{}
+\subsection{}
+\subsection{}
+\subsection{}
+\section{Resolución de los ejercicios}
+\subsection{}
+\subsection{}
+\subsection{}
+\subsection{}
+\subsection{}
+\subsection{}
+\subsection{}
+
+\end{document}

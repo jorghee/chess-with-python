@@ -1,2 +1,8 @@
 __pycache__
 chess
+*.aux
+*.log
+*.out
+*.toc
+*.pyg
+_minted-python_report
