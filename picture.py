@@ -50,24 +50,51 @@ class Picture:
     up = [*self.img, *p.img]
     return Picture(up)
 
-  # Las dos imagenes deben ser del mismo tamaño, si la imagen como argumento es más grande
-  # se recorta a la imagen actual y de lo contrario, ocurre un error.
+  # Implementación que funciona para cualquier longitud de las figuras
   def under(self, p):
     """ Devuelve una nueva figura poniendo la figura p sobre la
         figura actual """
+
+    # Verificamos qué figura tienes más cadenas de texto
+    lower = self.img
+    high = p.img
+
+    if len(lower) > len(high):
+      lower = p.img
+      high = self.img
+
+    # Iteramos sobre las cadenas
     under = []
-    for i in range(len(self.img)):
-      under.append(self.newString(self.img[i], p.img[i]))
+    for i in range(len(high)):
+      if i < len(lower):
+        under.append(self.newString(self.img[i], p.img[i]))
+      else:
+        under.append(high[i])
     return Picture(under)
   
   # Funcion que itera por cada caracter
   def newString(self, s, p):
+    # Verificaciones innecesarias, pero es imposible saber cual figura está por
+    # encima y a la vez es de mayor tamaño
+    lower = s
+    high = p
+    if len(s) > len(p):
+      lower = p
+      high = s
+
+    # Realizamos las concatenaciones
     string = ""
-    for i in range(len(s)):
-      if p[i] == " ":
-        string += s[i]
+    for i in range(len(high)):
+      if len(p) == len(high):
+        if i < len(s) and p[i] == " ":
+          string += s[i]
+        else:
+          string += p[i]
       else:
-        string += p[i]
+        if i < len(p) and p[i] != " ":
+          string += p[i]
+        else:
+          string += s[i]
     return string
 
   # Usando el operador multiplicador '*' para generar el elemento cuantas veces queramos
