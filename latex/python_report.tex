@@ -168,6 +168,7 @@ Consiste en sobreponer la imagen que se recibe como argumentos sobre la imagen a
 
 \paragraph{Dificultad}: La dificultad fue que el método funcione para sobreponer figuras de diferentes tamaños: cantidad de strings en cada lista y cantidad de caracateres en cada string.
 
+\singlespacing
 Para solucionar este reto, se tenía la obligación de establecer el tamaño más grande tanto en la catidad de string como en la cantidad de caracateres. Y de acuerdo a estos limites realizamos las iteraciones y verificaciones para que al final se rellenen con los string y/o caracateres restantes de la figura más grande.
 
 \begin{itemize}
@@ -213,7 +214,7 @@ Usamos la misma lógica de rellenar con los strings restantes de la figura más 
   \item Iniciamos el bucle en un rango de \mintpython{h}, argumento que representa el tamaño del string de la figura más grande. Luego necesitamos realizar varias verificaciones comenzando con saber cúal es la figura que es más grande, parece absurdo hacer esto ahora pero es necesario ya que no se podia pasar directamente con a la figura con mayor número de caracateres porque de esta manera se perdia el conocimiento de qué figura es la que debe superponer a la otra. Por ejemplo nosotros sabemos que \mintpython{p} deber superponer a \mintpython{s} y eso no lo podemos perder.
   \item Ahora empezamos con las verificaciones de acuerdo al caracter vacío. Como sabemos que \mintpython{p} es el string que debe superponer a \mintpython{s} y sabiendo que \mintpython{p} es el string con mayor tamaño, debemos verificar que la variable de control \mintpython{i} no sea mayor al tamaño de string \mintpython{s} y tambien verificar que \mintpython{p[i]} sea igual al caracter vacio. De cumplirse estas 2 condiciones entonces se concatena dicho caracter en iteración, de lo contrario se contrario se contatenará el caracter \mintpython{p[i]}.
 
-  \item Si es el caso de que \mintpython{p} no es el string de mayor tamaño entonces se asume que \mintpython{s} lo es, por lo tanto debemos verificar que \mintpython{i} sea menor que el tamaño que \mintpython{p} que ahora es el string pequeño y tambien verificar que \mintpython{p[i]} sea diferente del caracter vacío, ya que de lo contrario se concatena con \mintpython[s[i]].
+  \item Si es el caso de que \mintpython{p} no es el string de mayor tamaño entonces se asume que \mintpython{s} lo es, por lo tanto debemos verificar que \mintpython{i} sea menor que el tamaño que \mintpython{p} que ahora es el string pequeño y tambien verificar que \mintpython{p[i]} sea diferente del caracter vacío, ya que de lo contrario se concatena con \mintpython{s[i]}.
 \end{itemize}
 
 \begin{minted}[bgcolor=background]{python}
@@ -271,13 +272,13 @@ def verticalRepeat(self, n):
 \end{minted}
 
 \subsection{El método \mintpython{rotate()}}
-Si no fuera por el método \mintpython{under()}, este método a implementar hubiera sido el más dificil porque nos pide devolver la figura actual rotada 90 grados. Es necesario mencionar que esta implementación solo funciona para figuras con tamaños y con tamaños de strings iguales.
-\singlespacing
-Para iniciar esta lógica se ha decidido que la rotación va a ser antihoraria. Entonces, la idea básica es que el el primer caracter del primer string de la figura se convierta en el primer caracter del último string de la figura, luego que el segundo caracter del primer string de la figura se convierta en el primer caracter del penúltimo string, y asi sucesivamente.
+Este método a implementar es el segundo más dificil de esta sección seguido del método \mintpython{under()} porque nos pide devolver la figura actual rotada 90 grados. Es necesario mencionar que esta implementación solo funciona para figuras con tamaños de strings iguales y cada strings con el número de caracteres iguales.
+\paragraph{Lógica:}Para iniciar esta lógica se ha dispuesto que la rotación será antihoraria. Entonces, la idea básica es que el el primer caracter del primer string de la figura se convierta en el primer caracter del último string de la nueva figura, luego que el segundo caracter del primer string de la figura se convierta en el primer caracter del penúltimo string de la nueva figura, y asi sucesivamente terminando con el último caracter del último string de la figura como el último caracter del primer string de la nueva figura.
 
 \begin{itemize}
-  \item Comenzamos creando una lista \mintpython{rotate} de un tamaño de \mintpython{len(self.img)} que contienen strings vacios. Estos strings vacíos poco a poco se iran concatenando con los caracteres respectivos según la lógica ya explicada.
-  \item Ahora necesitamos iterar por los caracteres de cada string, por lo tanto usamos un \mintpython{for in} anidado. Entonces cada caracter que iteramos lo ponemos al final de \mintpython{rotate} pero avanzando hacia el primer string de la lista. Aqui nos ayuda la variable de control \mintpython{i} que aumenta según el \mintpython{for in} interno y se reinicia cuando termina dicho bucle. 
+  \item Comenzamos creando una lista \mintpython{rotate} de un tamaño de \mintpython{len(self.img)} que contiene strings vacios. Estos strings vacíos poco a poco se iran concatenando con los correspondientes caracteres según la lógica ya explicada.
+  \item Ahora necesitamos empezar iterarando por los caracteres de cada string, por lo tanto se ha dispuesto usar un \mintpython{for in} anidado. Entonces cada caracter que iteramos de la figura lo concatenamos con los strings vacíos que se ha creado. Recordemos que debemos ir concatenando el primer caracter en el último string de \mintpython{rotate} e ir bajando hasta llegar al primer string de \mintpython{rotate} donde concatenamos el último caracter del primer string de \mintpython{self.img}, luego esto se repite con los strings restantes de \mintpython{self.img}.
+  \item Para que vaya disminuyendo el indice de \mintpython{rotate} hasta llegar a \mintpython{rotate[0]} debemos ayudarnos de una variable de control que la nombramos \mintpython{i}, esta variable aumenta en 1 de acuerdo al \mintpython{for in} interno y se reinicia a 0 cuando termina dicho bucle, asi logramos que no haya un desborde de indice al acceder a los strings de \mintpython{rotate}
 \end{itemize}
 
 \begin{minted}[bgcolor=background]{python}
@@ -302,12 +303,169 @@ def rotate(self):
 \end{minted}
 
 \section{Resolución de los ejercicios}
-\subsection{}
-\subsection{}
-\subsection{}
-\subsection{}
-\subsection{}
-\subsection{}
-\subsection{}
+\subsection{Ejercicio 2A}
+Para crear esta figura se ha hecho uso de los métodos \mintpython{join()}, \mintpython{negative()} y \mintpython{up()}. 
+
+\begin{itemize}
+  \item Comenzamos usando el objeto \mintpython{knight} y uniendo a la derecha el mismo objeto pero invirtiendo el color con el uso del método \mintpython{negative()}.
+  \item Luego, esta misma referencia \mintpython{table} al nuevo objeto la ponemos encima de este mismo objeto pero invertido de color. La acción de ponerlo encima lo realizamos usando el método \mintpython{up()}.
+\end{itemize}
+
+\begin{minted}[bgcolor=background]{python}
+from interpreter import draw
+from chessPictures import *
+
+table = knight.join(knight.negative())
+table = table.up(table.negative())
+
+draw(table)
+\end{minted}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/exercise2a.png}
+  \caption{Ejercicio 2A}
+\end{figure}
+
+\subsection{Ejercicio 2B}
+Lo que nos pide es parecido al Ejercicio 2A, con la única deferencia que la referencia \mintpython{table} ahora la ponemos encima del mismo \mintpython{table} pero ya no invertido de color, sino con su espejo vertical. La acción de crear el espejo vertical de la figura \mintpython{table} la realizamos usando el método \mintpython{verticalMirror()}
+
+\begin{minted}[bgcolor=background]{python}
+from interpreter import draw
+from chessPictures import *
+
+table = knight.join(knight.negative())
+table = table.up(table.verticalMirror())
+
+draw(table)
+\end{minted}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/exercise2b.png}
+  \caption{Ejercicio 2B}
+\end{figure}
+
+\subsection{Ejercicio 2C}
+El problema nos pide generar 4 reinas consecutivas a la derecha. El único método necesario que se usará es el método \mintpython{horizontalRepeat(n)} con el argumento de $ n = 4 $.
+
+\begin{minted}[bgcolor=background]{python}
+from interpreter import draw
+from chessPictures import *
+
+draw(queen.horizontalRepeat(4))
+\end{minted}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/exercise2c.png}
+  \caption{Ejercicio 2C}
+\end{figure}
+
+\subsection{Ejercicio 2D}
+Desde este problema en adelante nuestra lógica se basa en crear un patron base y manipularlo, cuando sea necesario, con todas los métodos que hemos implementado.
+\singlespacing
+El problema nos pide generar una fila de cuadrados intercalados de color, empezando con el cuadrado de color plomo o blanco. Rápidamente podemos imaginar que el patrón base es la figura \mintpython{square.join(square.negative())} y en este caso esta figura la repetimo 4 veces usando el método \mintpython{horizontalRepeat()}.
+
+\begin{minted}[bgcolor=background]{python}
+from interpreter import draw
+from chessPictures import *
+
+draw(square.join(square.negative()).horizontalRepeat(4))
+\end{minted}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/exercise2d.png}
+  \caption{Ejercicio 2D}
+\end{figure}
+
+\subsection{Ejercicio 2E}
+Este problema nos pide lo mismo que el Ejercicio 2D pero empezando con el cuadrado de color negro. Entonces el patrón base ahora es la figura \mintpython{square.negative().join(square)} y esta la repetimos tambien 4 veces.
+
+\begin{minted}[bgcolor=background]{python}
+from interpreter import draw
+from chessPictures import *
+
+draw(square.negative().join(square).horizontalRepeat(4))
+\end{minted}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/exercise2e.png}
+  \caption{Ejercicio 2E}
+\end{figure}
+
+\subsection{Ejercicio 2F}
+El problema nos dice crear un tablero de ajedrez de 8x4 y empezando obviamente con el cuadrado blanco y asi intercalar los colores de los siguientes cuadrados. Entonces ahora podemos decir que nuestro patrón base será la primera fila del tablero, referenciaremos a este patrón con el nombre de \mintpython{table}. 
+\singlespacing
+Luego usamos este patrón para generar la segunda fila que simplemente es invertir los colores del patron o, tambien, es generar su espejo vertical. Hemos optado por usar \mintpython{negative()}.
+\singlespacing
+Finalmente hemos generado una figura de 2 filas con 8 columnas y solo nos queda repetirla verticalmente 2 veces. Para esta accion usamos el método \mintpython{verticalRepeat()}.
+
+\begin{minted}[bgcolor=background]{python}
+from interpreter import draw
+from chessPictures import *
+
+table = square.join(square.negative()).horizontalRepeat(4)
+table = table.up(table.negative()).verticalRepeat(2)
+
+draw(table)
+\end{minted}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/exercise2f.png}
+  \caption{Ejercicio 2F}
+\end{figure}
+
+\subsection{Ejercicio 2G}
+Finalmente llegamos al problema donde nos pide crear un tablero de ajedrez completo con las fichas ordenadas. Se ha dividido en 3 partes que al final se deben de unir para conforma el tablero completo:
+
+\begin{itemize}
+  \item \textbf{Piezas negras:} Las piezas negras siempre van sobrepuestas sobre un tablero donde la pieza \textbf{torre} esta por encima del cuadrado blanco, y asi se intercalan los cuadrados. Esta parte la partimos en 2 partes más, pieces y paws:
+    \begin{itemize}
+      \item \textbf{Pieces:} Para generar la base de las piezas negras es la misma lógica que el Ejercicio 2D y esta figura la estamos referenciando con el identificador \mintpython{squares}. Ahora debemos generar la fila de las piezas, para ello hemos usado el método \mintpython{join()} colando uno a lado de otro todas las piezas y al final a toda esta fila de piezas la cambiamos de color con \mintpython{negative()}. Finalmente obreponemos la fila de piezas negras sobre \mintpython{squares} usando el método \mintpython{under()} y creando asi las Piezas negras.
+
+      \item \textbf{Pawns:} Para crear las fila de peones, simplemente usamos el método \mintpython{horizontalRepeat()} y lo superponemos a \mintpython{squares}. Veremos aqui que tanto la fila de peones como la fila de \mintpython{squares} no coinciden con su color respectivo, por lo tanto a este resultado le cambiamos de color con \mintpython{negative()}. A
+    \end{itemize} 
+    Para culminar esta parte necesitamos colocar encima por encima de los peones negros, las piezas negras y esta acción la hacemos con \mintpython{up()}. A este resultado lo referenciamos con el identificador \mintpython{partBlack}
+
+  \item \textbf{Tablero vacío:} Para esta parte simplemente usamos \mintpython{squares}, lo ponemos arriba de \mintpython{squares.negative()} y repetimos verticamente 2 veces. Esta figura la referenciamos como \mintpython{tableEmpty}.
+
+  \item \textbf{Piezas blancas:} Para esta parte simplemente reutilizamos los resultados de \textbf{Piezas negras}. En vez de poner a los peones por debajo de las piezas como lo hicimos en esa sección, ahora lo hacemos al revez y al resultado le cambiamos de color con el método \mintpython{negative()}. Este resultado lo referenciamos con el identificador \mintpython{partWhite}
+\end{itemize}
+
+Finalmente tenemos que unir estas tres partes, colocando \textbf{Piezas negras} encima de \textbf{Tablero vacío} y este encima de \textbf{Piezas blancas}.
+
+\begin{minted}[bgcolor=background]{python}
+from interpreter import draw
+from chessPictures import *
+
+squares = square.join(square.negative()).horizontalRepeat(4)
+piecesPart = rock.join(knight).join(bishop)
+
+# Part black
+pieces = squares.under(piecesPart.join(queen).join(king).join(piecesPart).negative())
+pawns = squares.under(pawn.horizontalRepeat(8)).negative()
+partBlack = pieces.up(pawns)
+
+# Part empty
+tableEmpty = squares.up(squares.negative()).verticalRepeat(2)
+
+# Part white
+partWhite = pawns.up(pieces).negative()
+
+# table
+table = partBlack.up(tableEmpty).up(partWhite)
+
+draw(table)
+\end{minted}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/exercise2g.png}
+  \caption{Ejercicio 2G}
+\end{figure}
 
 \end{document}
