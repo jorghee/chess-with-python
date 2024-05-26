@@ -1,5 +1,5 @@
-from interpreter import draw
-from chessPictures import *
+from graphics.interpreter import draw
+from graphics.chessPictures import *
 
 squares = square.join(square.negative()).horizontalRepeat(4)
 piecesPart = rock.join(knight).join(bishop)

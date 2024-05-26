@@ -1,4 +1,4 @@
-from interpreter import draw
-from chessPictures import *
+from graphics.interpreter import draw
+from graphics.chessPictures import *
 
 draw(queen.horizontalRepeat(4))
